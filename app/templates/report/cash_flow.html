@@ -1,0 +1,83 @@
+{% extends "report/basedetail.html" %}
+{% block title %}Cash Flow dari Pembayaran Pelanggan{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Tabel Ringkasan -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Deskripsi</th>
+                <th>Jumlah (Rp)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Total Pembayaran Tunai</td>
+                <td>{{ total_pembayaran_tunai | currency }}</td>
+            </tr>
+            <tr>
+                <td>Total Diskon</td>
+                <td>{{ total_diskon | currency }}</td>
+            </tr>
+            <tr>
+                <td>Total Refund/Retur</td>
+                <td>{{ total_refund | currency }}</td>
+            </tr>
+            <tr>
+                <td>Arus Kas Bersih</td>
+                <td>{{ arus_kas_bersih | currency }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Grafik Line Chart -->
+    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+        <canvas id="cashFlowChart"></canvas>
+    </div>
+	<div class="mb-3 d-flex justify-content-end">
+		<button class="btn btn-warning w-30 no-print" onclick="printContent()"><i class="fa-solid fa-print"></i>&nbsp;Print&nbsp;</button>
+	</div>
+	
+</div>
+
+<script>
+    // Data untuk grafik
+    var ctx = document.getElementById('cashFlowChart').getContext('2d');
+    var cashFlowChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Total Pembayaran Tunai', 'Total Diskon', 'Total Refund', 'Arus Kas Bersih'],
+            datasets: [{
+                label: 'Cash Flow',
+                data: [
+                    {{ total_pembayaran_tunai }},
+                    {{ total_diskon }},
+                    {{ total_refund }},
+                    {{ arus_kas_bersih }}
+                ],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return 'Rp ' + value.toLocaleString();
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

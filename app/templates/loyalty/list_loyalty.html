@@ -1,0 +1,84 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Customer Loyalty Program{% endblock %}
+{% block content %}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-danger d-flex align-items-center" id="addProgram" href="{{ url_for('loyalty.add_program') }}">
+            <i class="fa-solid fa-heart-circle-plus"></i>&nbsp;Create Program
+        </a> &nbsp;&nbsp;
+        <a class="btn btn-warning d-flex align-items-center" id="adtier" href="{{ url_for('loyalty.list_tiers') }}">
+            <i class="fa-solid fa-layer-group"></i>&nbsp;Tier Levels
+        </a>&nbsp;&nbsp;
+        <a class="btn btn-primary d-flex align-items-center" id="addProgram" href="{{ url_for('campaign.list_campaigns') }}">
+            <i class="fa-solid fa-rectangle-ad"></i>&nbsp;Campaigns
+        </a>
+    </div>
+    <div class="table-responsive">
+         <table class="table table-hover table-striped">
+             <thead class="sticky-header">
+                <tr>
+                    <th>Program Name</th>
+                    <th>Points</th>
+                    <th>Discount</th>
+                    <th class="hide-on-mobile">Type</th>
+                    <th>Multiples</th>
+                    <th class="hide-on-mobile">Repeat</th>
+                    <th class="hide-on-mobile">Points and Discount</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for program in programs %}
+                <tr>
+                    <td>{{ program.name }}</td>
+                    <td>{{ program.points }}</td>
+                    <td>{{ program.discount }}</td>
+                    <td class="hide-on-mobile">
+                        {% if program.discount_type == 1 %}
+                            Percent
+                        {% elif program.discount_type == 2 %}
+                            Rupiah
+                        {% elif program.discount_type == 3 %}
+                            Free
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </td>
+                    <td class="hide-on-mobile">{{ program.discount_repeat_number }}</td>
+                    <td class="hide-on-mobile">
+                        <input type="checkbox" {% if program.discount_repeat %}checked{% endif %} disabled>
+                    </td>
+                    <td>
+                        <input type="checkbox" {% if program.discount_points %}checked{% endif %} disabled>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-inline-flex">
+                            <!-- Edit Button -->
+                            <a class="btn btn-warning btn-sm me-2" href="{{ url_for('loyalty.update_program', id=program.id) }}" title="Edit">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <!-- Delete Form -->
+                            <form method="POST" action="{{ url_for('loyalty.delete_program', id=program.id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this program?');">
+                                {{ form.hidden_tag() }}
+                                {{ form.program_id(id='program_id', value=program.id) }}
+                                <button class="btn btn-danger btn-sm" type="submit" title="Delete">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </form>
+                            <a class="btn btn-warning btn-sm me-2" href="{{ url_for('loyalty.list_tiers', id=program.id) }}" title="Tier Levels">
+                                <i class="fa-solid fa-layer-group"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">No programs available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

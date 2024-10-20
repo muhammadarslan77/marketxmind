@@ -1,0 +1,114 @@
+{% extends "report/basedetail.html" %}
+{% block title %}📊Key Performance Indicators (KPIs){% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+		{% if recommendation|length > 100 %}
+           
+			{{ recommendation | safe}}
+		{% else %}
+        <!-- Revenue Growth Rate -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-success text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-chart-area display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Tingkat Pertumbuhan Pendapatan</h4>
+                        <h1 class="display-3">{{ revenue_growth_rate  | currency }}%</h1>
+                        <p>Persentase perubahan pendapatan dari bulan lalu dibandingkan dengan bulan sebelumnya. Ini adalah metrik kunci untuk menilai pertumbuhan bisnis Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Retention Rate -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-info text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-user-check display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Tingkat Retensi Pelanggan (CRR)</h4>
+                        <h1 class="display-3">{{ customer_retention_rate  | currency }}%</h1>
+                        <p>Persentase pelanggan yang kembali melakukan pembelian dalam jangka waktu tertentu. Ini mengukur loyalitas pelanggan terhadap bisnis Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Lifetime Value (CLTV) -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-warning text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-wallet display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Nilai Umur Pelanggan (CLTV)</h4>
+                        <h1 class="display-3">Rp. {{ cltv  | currency }}</h1>
+                        <p>Rata-rata pendapatan yang diperoleh dari seorang pelanggan selama mereka berbisnis dengan perusahaan Anda. Ini adalah indikator penting dari nilai pelanggan jangka panjang.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Transaction Value (ATV) -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-primary text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-money-bill-wave display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Nilai Transaksi Rata-Rata (ATV)</h4>
+                        <h1 class="display-3">Rp. {{ atv  | currency  }}</h1>
+                        <p>Rata-rata jumlah uang yang dihabiskan oleh pelanggan setiap kali mereka melakukan pembelian. Metrik ini membantu menilai strategi harga dan pemasaran Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Churn Rate -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-danger text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-user-slash display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Tingkat Pengunduran Diri (Churn Rate)</h4>
+                        <h1 class="display-3">{{ churn_rate  | currency }}%</h1>
+                        <p>Persentase pelanggan yang berhenti berbisnis dengan perusahaan selama periode tertentu. Churn rate membantu memahami seberapa banyak pelanggan yang meninggalkan layanan Anda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- Churn Rate -->
+        <div class="col-md-12 mb-4">
+            <div class="card shadow-lg bg-gradient-danger text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-comments-dollar display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Cash Flow Dari Pembayaran Pelanggan</h4>
+                        <h1 class="display-3">Rp. {{ cash_flow  | currency }}</h1>
+                        <p>Jumlah uang tunai yang diterima perusahaan dari pelanggan sebagai pembayaran atas penjualan barang atau jasa. Menunjukkan sejauh mana perusahaan menerima uang tunai dari pelanggan, yang dapat digunakan untuk operasional, pembayaran hutang, dan kebutuhan bisnis lainnya</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- Recommendations -->
+        
+		<div class="col-md-12 mb-4">
+			
+            <div class="card shadow-lg bg-gradient-danger text-white">
+                <div class="card-body d-flex align-items-center">
+                    <i class="fa-solid fa-comments-dollar display-3 me-4"></i>
+                    <div>
+                        <h4 class="fw-bold">Rekomendasi AI</h4>
+                        <div class="text-dark">{{ recommendation | safe}}</div>
+                    </div>
+                </div>
+            </div>
+		
+        </div> 
+		{% endif %}
+		
+    </div>
+	<div class="mb-3 d-flex justify-content-end">
+		<button class="btn btn-warning w-30 no-print" onclick="printContent()"><i class="fa-solid fa-print"></i>&nbsp;Print&nbsp;</button>
+	</div>
+</div>
+{% endblock %}

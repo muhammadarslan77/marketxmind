@@ -1,0 +1,61 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Campaigns and Notifications{% endblock %}
+{% block content %}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-danger d-flex align-items-center" id="addCampaign" href="{{ url_for('campaign.add_campaign') }}">
+            <i class="fa-solid fa-plus me-2"></i>&nbsp;Create New Notification
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead class="sticky-header">
+                <tr>
+                    <th>Campaign Name</th>
+                    <th>Start Date</th>
+                    <th>Transaction Number</th>
+                    <th>Scheduling</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for campaign in campaigns %}
+                <tr>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.start_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ campaign.transaction_number }}</td>
+                    <td>
+                        <input type="checkbox" {% if campaign.is_scheduler %}checked{% endif %} disabled>
+                    </td>
+                    <td>
+                        <input type="checkbox" {% if campaign.is_active %}checked{% endif %} disabled>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-inline-flex">
+                            <!-- Edit Button -->
+                            <a class="btn btn-warning btn-sm me-2" href="{{ url_for('campaign.update_campaign', id=campaign.id) }}" title="Edit">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <!-- Delete Form -->
+                            <form method="POST" action="{{ url_for('campaign.delete_campaign', id=campaign.id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this campaign?');">
+                                {{ form.hidden_tag() }}
+                                {{ form.campaign_id(id='campaign_id', value=campaign.id) }}
+                                <button class="btn btn-danger btn-sm" type="submit" title="Delete">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No campaigns available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

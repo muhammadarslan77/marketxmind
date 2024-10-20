@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top-Selling Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Top-Selling Products</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="sales_chart">{{ sales_chart | safe }}</div>  <!-- The sales chart will be rendered here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example: You can add interactive behavior here for drilldowns or real-time data updates
+</script>
+
+</body>
+</html>

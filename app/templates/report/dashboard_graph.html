@@ -1,0 +1,167 @@
+{% extends "report/basedetail.html" %}
+{% block title %}Omset dan Pembayaran{% endblock %}
+{% block content %}
+<div class="container mt-4">
+   
+    <!-- Single chart for both datasets -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-md-10">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white text-center">
+                    Grafik Omset dan Pembayaran
+                </div>
+                <div class="card-body">
+                    <canvas id="combinedChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Table for Omset and Pembayaran -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Periode</th>
+                            <th>Omset</th>
+                            <th>Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in table_data %}
+                        <tr>
+                            <td>{{ row.time_period }}</td>
+                            <td>{{ row.total_amount | currency }}</td>
+                            <td>{{ row.paid_amount | currency }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explanation text -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-12 col-md-10">
+            <p class="text-muted">
+                <strong>Omset</strong> = Jumlah tagihan invoice yang dibuat pada periode tersebut.<br>
+                <strong>Pembayaran</strong> = Jumlah pembayaran yang dilakukan pelanggan dalam periode tersebut.
+            </p>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+		<div class="col-12 col-md-10 mb-3 d-flex justify-content-end">
+			<button class="btn btn-warning w-30 no-print" onclick="printContent()"><i class="fa-solid fa-print"></i>&nbsp;Print&nbsp;</button>
+		</div>
+    </div>
+	
+	
+    <br />
+</div>
+
+<!-- Chart.js integration -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctxCombined = document.getElementById('combinedChart').getContext('2d');
+
+    const labels = {{ labels | tojson }};
+    const totalData = {{ total_values | tojson }};
+    const paidData = {{ paid_values | tojson }};
+
+    // Single chart with both Omset and Pembayaran datasets
+    const combinedChart = new Chart(ctxCombined, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Omset',
+                    data: totalData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5
+                },
+                {
+                    label: 'Pembayaran',
+                    data: paidData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        font: {
+                            size: 16
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Print function to print the page with the chart
+    function printChart() {
+        window.print();
+    }
+</script>
+
+<!-- Custom styles for better layout and mobile responsiveness -->
+<style>
+    .container {
+        max-width: 1200px;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    canvas {
+        max-height: 400px;
+    }
+
+    @media (max-width: 576px) {
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        button {
+            font-size: 1rem;
+        }
+
+        canvas {
+            max-height: 300px;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!-- templates/loyalty/list_tiers.html -->
+
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Loyalty Tier{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-primary" href="{{ url_for('loyalty.add_tier') }}">
+            <i class="fa-solid fa-plus me-2"></i>&nbsp;Add Loyalty Tier
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Tier Name</th>
+                    <th>Points Threshold</th>
+                    <th>Benefits</th>
+                    <th>Program</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tier, program in tiers %}
+                <tr>
+                    <td>{{ tier.name }}</td>
+                    <td>{{ tier.points_threshold }}</td>
+                    <td>{{ tier.benefits }}</td>
+                    <td>{{ program.name }}</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="{{ url_for('loyalty.edit_tier', id=tier.id) }}">Edit</a>
+                        <form method="POST" action="{{ url_for('loyalty.delete_tier', id=tier.id) }}" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this tier?');">
+                            {{ form.hidden_tag() }}
+                            {{ form.tier_id(id='tier_id', value=tier.id) }}
+                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

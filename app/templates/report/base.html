@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="description" content="marketXmind - Community Consumption Insights and Engagement Platform">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#100DD1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+    <!-- The above tags *must* come first in the head, any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>marketXmind - Community Consumption Insights and Engagement Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-72x72.png') }}">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-96x96.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='dashboard/img/icons/icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='dashboard/img/icons/icon-167x167.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='dashboard/img/icons/icon-180x180.png') }}">
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/brands.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/solid.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/nice-select.css') }}">
+	<!-- Include Cropper.js CSS and JS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/style.css') }}">
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='dashboard/manifest.json') }}">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        /* Add background colors, hover effects, and card shadow for wow effect */
+		.dashboard-card {
+			background-color: #f8f9fa;
+			transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+			border: 1px solid #ddd;
+			border-radius: 12px;
+		}
+
+		.dashboard-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		}
+
+		.card-icon {
+			font-size: 3rem;
+			color: #007bff;
+		}
+
+		.card-text {
+			font-size: 1.5rem;
+			font-weight: bold;
+			color: #28a745;
+		}
+
+
+        .chart-container {
+            padding: 20px;
+        }
+        
+    </style>
+	
+	<style>
+	 .table-responsive {
+		overflow-x: auto;
+	  }
+
+	  /* Sticky Header and Pagination */
+	  .sticky-header {
+		position: sticky;
+		top: 0;
+		background-color: #fff;
+		z-index: 100;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	  }
+
+	  .sticky-pagination {
+		position: sticky;
+		bottom: 0;
+		background-color: #fff;
+		padding: 10px 0;
+		box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+	  }
+
+	  /* Mobile-friendly adjustments */
+	  @media (max-width: 768px) {
+		.table th:nth-child(2),
+		.table td:nth-child(2),  
+		.table th:nth-child(4),
+		.table td:nth-child(4), 
+		.table th:nth-child(5),
+		.table td:nth-child(5)
+		{
+		  display: none;
+		}
+
+		.table th,
+		.table td {
+		  padding: 12px 8px;
+		  font-size: 14px;
+		}
+
+		.alternative-command-options .dropdown-toggle {
+		  width: 100%;
+		  text-align: left;
+		}
+
+		.pagination .page-link {
+		  padding: 8px 12px;
+		  font-size: 14px;
+		}
+	  }
+
+	  @media (max-width: 576px) {
+		.table th,
+		.table td {
+		  padding: 10px 5px;
+		  font-size: 13px;
+		}
+	  }
+
+
+	.spinner-border {
+		display: none;
+		width: 1rem;
+		height: 1rem;
+		vertical-align: text-bottom;
+		border-width: 0.2em;
+	}
+
+	.alternative-command-options .dropdown-menu {
+		min-width: 200px; /* Ensures consistent width */
+		padding: 0; /* Removes default padding */
+		border-radius: 8px; /* Rounded corners */
+	  }
+
+	.alternative-command-options .dropdown-item {
+		display: flex; /* Flexbox for better alignment */
+		align-items: center; /* Vertically center content */
+		padding: 12px 16px; /* Add padding for a nicer look */
+		font-size: 16px; /* Font size for better readability */
+		color: #333; /* Darker text color */
+	  }
+
+	.alternative-command-options .dropdown-item i {
+		margin-right: 10px; /* Spacing between icon and text */
+		font-size: 18px; /* Slightly larger icons */
+	  }
+
+	.alternative-command-options .dropdown-item:hover {
+		background-color: #f8f9fa; /* Light hover effect */
+	  }
+
+	.alternative-command-options .dropdown-toggle {
+		padding: 10px; /* More padding for button */
+		border-radius: 8px; /* Rounded button */
+	  }
+
+	/* Mobile-specific styles */
+	@media (max-width: 576px) {
+    .alternative-command-options .dropdown-menu {
+      min-width: 100%; /* Full width on mobile */
+      padding: 0; /* Remove default padding */
+    }
+
+    .alternative-command-options .dropdown-item {
+      padding: 14px 20px; /* Larger padding for easier clicks */
+      font-size: 18px; /* Slightly larger text for readability */
+    }
+
+    .alternative-command-options .dropdown-item i {
+      font-size: 20px; /* Larger icons on mobile */
+      margin-right: 12px; /* More space between icon and text */
+    }
+
+    .alternative-command-options .dropdown-toggle {
+      width: 100%; /* Full-width button on mobile */
+      text-align: left; /* Align text/icon to the left */
+    }
+   </style>
+  </head>
+  <body>
+    <!-- Preloader-->
+    <div class="preloader" id="preloader">
+      <div class="spinner-grow text-secondary" role="status">
+        <div class="sr-only"></div>
+      </div>
+    </div>
+    <!-- Header Area -->
+    <div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between d-flex rtl-flex-d-row-r">
+        <!-- Logo Wrapper -->
+        <div class="logo-wrapper"><a href="#">
+			<img src="{{ url_for('static', filename='dashboard/img/core-img/logo-small.png') }}" alt="MarketXmind">
+           
+		 </a></div>
+        <div class="navbar-logo-container d-flex align-items-center">
+          <!-- Cart Icon -->
+          <div class="cart-icon-wrap"><a href="#"><i class="fa-solid fa-bell lni-tada-effect"></i><span></span></a></div>
+          <!-- User Profile Icon -->
+          <div class="user-profile-icon ms-2"><a href="#"><img src="{{ url_for('static', filename='dashboard/img/bg-img/user.jpg') }}" alt=""></a></div>
+          <!-- Navbar Toggler -->
+          <div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas">
+            <div><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+    <div class="page-content-wrapper">
+	   {% block content %}{% endblock %}
+    </div>
+    <!-- Internet Connection Status-->
+    <div class="internet-connection-status" id="internetStatus"></div>
+    <!-- Footer Nav-->
+    <div class="footer-nav-area" id="footerNav">
+      <div class="suha-footer-nav">
+            <ul class="h-100 d-flex align-items-center justify-content-between ps-0 d-flex rtl-flex-d-row-r">
+				  <li><a href="{{ url_for('advancecrm.dashboard') }}"><i class="fa-solid fa-house"></i>Home</a></li>
+				  <li><a href="{{ url_for('customer.dashboard') }}"><i class="fa-solid fa-user"></i></i>Customer</a></li>
+				  <li><a href="#"><i class="fa-solid fa-store"></i>Store</a></li>
+				  <li><a href="{{ url_for('advancecrm.dashboard') }}"><i class="fa-solid fa-user-doctor"></i>CRM</a></li>
+				  <li><a href="#"><i class="fa-solid fa-right-to-bracket"></i>Login</a></li>		  
+
+			</ul>
+      </div>
+    </div>
+	<!-- Add Bootstrap JS for Modals -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('invoiceChart').getContext('2d');
+    var invoiceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['1-30 days', '31-60 days', '61-90 days', '91+ days'],
+            datasets: [{
+                label: 'Invoice Aging',
+                data: [0, 0, 0, 0],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(255, 99, 132, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 2,
+                hoverBackgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Handle form submission for filtering reports
+    document.getElementById('reportFilter').addEventListener('submit', function(e) {
+			e.preventDefault();
+			let criteria = document.getElementById('criteria').value;
+			let reportType = document.getElementById('reportType').value;
+
+			// Show loader or spinner
+			document.querySelector('.chart-container').classList.add('loading');
+
+			// AJAX request to fetch report data
+			$.ajax({
+				url: '{{ url_for("report.dashboard") }}',
+				method: 'POST',
+				data: { criteria, reportType },
+				success: function(response) {
+					// Hide loader/spinner
+					document.querySelector('.chart-container').classList.remove('loading');
+
+					// Update the chart with new data
+					invoiceChart.data.datasets[0].data = response.chartData;
+					invoiceChart.update();
+
+					// Update dashboard cards with fade effect
+					$('#total_customers').fadeOut(200, function() {
+						$(this).text(response.total_customers).fadeIn(200);
+					});
+					$('#total_revenue').fadeOut(200, function() {
+						$(this).text('Rp.' + response.total_revenue).fadeIn(200);
+					});
+					// Repeat for other elements...
+				}
+			});
+		});
+	});
+ </script>
+ 
+	<script>
+		var serviceWorkerUrl = "{{ url_for('static', filename='dashboard/service-worker.js') }}";
+	</script>
+    <!-- All JavaScript Files-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.passwordstrength.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/theme-switching.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/no-internet.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/active.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/pwa.js') }}"></script>
+  </body>
+</html>

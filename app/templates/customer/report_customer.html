@@ -1,0 +1,177 @@
+{% extends "basedetail.html" %}
+{% block title %}Customer{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="profile-wrapper-area py-3">
+        <div class="card user-info-card">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="user-info">
+                    <p class="mb-0 text-dark">Report</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card user-data-card">
+            <div class="card-body">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title mb-2"><i class="fa-solid fa-calendar-days"></i><span>Date From</span></div>
+                        <div class="data-content">{{ form.date_from(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title mb-2"><i class="fa-solid fa-calendar-days"></i><span>Date To</span></div>
+                        <div class="data-content">{{ form.date_until(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center"><i class="fa-solid fa-user"></i><span>Customer Name</span></div>
+                        <div class="data-content">{{ form.customer_name(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center"><i class="fa-solid fa-bag-shopping"></i><span>Order Count</span></div>
+                        <div class="data-content">{{ form.order_count(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center"><i class="fa-solid fa-gift"></i><span>Reward Count</span></div>
+                        <div class="data-content">{{ form.reward_count(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center"><i class="fa-solid fa-arrow-up-short-wide"></i><span>Order By</span></div>
+                        <div class="data-content">{{ form.sort_by(class="form-control") }}</div>
+                    </div>
+                    <div class="single-profile-data d-flex align-items-center justify-content-between">
+                        <div class="title d-flex align-items-center"><i class="fa-solid fa-arrow-up-short-wide"></i><span>Sort Order</span></div>
+                        <div class="data-content">{{ form.sort_order(class="form-control") }}</div>
+                    </div>
+					
+					<div class="single-profile-data d-flex align-items-center justify-content-between">
+                            <div class="title d-flex align-items-center"><i class="fa-solid fa-list-alt"></i><span>Report Type</span></div>
+                            <div class="data-content">{{ form.report_type(class="form-control") }}</div>
+                    </div>
+					
+                    <div class="edit-profile-btn mt-3">
+                        {{ form.submit(class="btn btn-warning w-100") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="rptSection">
+    {% if results %}
+    <div class="profile-wrapper-area py-3">
+        <div class="mt-4 d-flex justify-content-between">
+            <button class="btn btn-secondary" id="backButton" onclick="window.location.href='{{ url_for('crm.members') }}'">
+                <i class="fa-solid fa-times"></i> Close
+            </button>
+            <button class="btn btn-success" id="printButton" onclick="printReport()">
+                <i class="fa-solid fa-print"></i> Print
+            </button>
+        </div>
+
+        <h3 class="mt-4">Laporan Transaksi Customer</h3>
+        <div id="printDate"></div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nama Customer</th>
+                    <th>No. Telp</th>
+                    <th>Order</th>
+                    <th>Jumlah</th>
+                    <th>Saldo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result.name }}</td>
+                    <td>{{ result.phone_number }}</td>
+                    <td>{{ result.order_count - result.reward_count }}</td>
+                    <td>{{ result.reward_count }}</td>
+                    <td>{{ result.order_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+</div>
+
+<div class="container" id="summarySection">
+    {% if summary_results %}
+    <h3 class="mt-4">Summary Report</h3>
+    <canvas id="summaryChart"></canvas>
+    {% endif %}
+</div>
+<script>
+    // Function to display print date
+    function displayPrintDate() {
+        const printDateElement = document.getElementById('printDate');
+        const currentDate = new Date().toLocaleDateString();
+        printDateElement.innerHTML = `<strong>Print Date: ${currentDate}</strong>`;
+    }
+
+    // Function to print only the report section
+    function printReport() {
+        // Add print date
+        displayPrintDate();
+
+        const printContent = document.getElementById('rptSection').innerHTML;
+        const originalContent = document.body.innerHTML;
+
+        // Replace body content with the print section
+        document.body.innerHTML = printContent;
+
+        // Print the report section
+        window.print();
+
+        // Restore the original content
+        document.body.innerHTML = originalContent;
+
+        // Remove print date after printing
+        document.getElementById('printDate').innerHTML = '';
+    }
+
+    {% if form.report_type.data == 'summary' and summary_results %}
+    // Generate the line chart for summary report
+    const ctx = document.getElementById('summaryChart').getContext('2d');
+    const summaryData = {
+        labels: {{ summary_results | map(attribute='date') | list | tojson }},
+        datasets: [{
+            label: 'Orders',
+            data: {{ summary_results | map(attribute='order_count') | list | tojson }},
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.1
+        }, {
+            label: 'Rewards',
+            data: {{ summary_results | map(attribute='reward_count') | list | tojson }},
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            fill: true,
+            tension: 0.1
+        }]
+    };
+
+    const summaryChart = new Chart(ctx, {
+        type: 'line',
+        data: summaryData,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    }
+                }
+            }
+        }
+    });
+    {% endif %}
+</script>
+{% endblock %}

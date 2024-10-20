@@ -1,0 +1,91 @@
+{% extends "basedetail.html" %}
+{% block title %}New Customer{% endblock %}
+{% block content %}
+
+      <div class="container">
+        <!-- Profile Wrapper-->
+        <div class="profile-wrapper-area py-3">
+          <!-- User Information-->
+          <div class="card user-info-card">
+            <div class="card-body p-4 d-flex align-items-center">
+
+              <div class="user-info">
+                <h5 class="mb-0">New Customer</h5>
+              </div>
+            </div>
+          </div>
+          <!-- User Meta Data-->
+          <div class="card user-data-card">
+            <div class="card-body">
+              <form method="POST">
+				{{ form.hidden_tag() }}
+                
+                <div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-user"></i>&nbsp;{{ form.name.label }}*</span>
+						
+						{{ form.name(class="form-control", id="name" ,type="text" ,placeholder="Nama Lengkap") }}
+					</div>
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-square-phone"></i>&nbsp;{{ form.phone.label }} *</span>
+						
+						{{ form.phone(class="form-control", id="phone", type="text", placeholder="Nomor Telepon") }}
+					</div>
+					
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-envelope"></i>&nbsp;{{ form.email.label }} *</span>
+						{{ form.email(class="form-control", id="email", type="text", placeholder="Email") }}
+					</div>
+					
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-location-dot"></i>&nbsp;{{ form.address_line1.label }} *</span>
+						
+						{{ form.address_line1(class="form-control", id="address_line1", type="text", placeholder="Alamat") }}
+					</div>
+					<div class="form-group text-start mb-4">
+						
+						{{ form.address_line2(class="form-control", id="address_line2", type="text", placeholder="") }}
+					</div>
+					
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-building"></i>&nbsp;{{ form.city.label }} *</span>
+						{{ form.city(class="form-control", id="city", type="text", placeholder="Kab / Kota") }}
+					</div>
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-building"></i>&nbsp;{{ form.zip.label }} *</span>
+						{{ form.zip(class="form-control", id="zip", type="text", placeholder="Kode Pos") }}
+					</div>
+				
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp;{{ form.credit_limit.label }} *</span>
+						{{ form.credit_limit(class="form-control", id="credit_limit", type="number", placeholder="Credit Limit") }}
+					</div>
+				
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-align-justify"></i>&nbsp;{{ form.type.label }}*</span>
+						<select class="form-control" id="type" name="type">
+							<option value="">Type</option>
+							{% for value, label in form.type.choices %}
+							<option value="{{ value }}" {% if value == form.type.data %}selected{% endif %}>{{ label }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group text-start mb-4">
+						<span><i class="fa-solid fa-align-justify"></i>{{ form.status.label }}*</span>
+						<select class="form-control" id="status" name="status">
+							<option value="">Status</option>
+							{% for value, label in form.status.choices %}
+							<option value="{{ value }}" {% if value == form.status.data %}selected{% endif %}>{{ label }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					
+                <button class="btn btn-success w-100" type="submit"><i class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan</button>
+              </form>
+			  
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+{% endblock %}

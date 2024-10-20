@@ -1,0 +1,39 @@
+<!-- templates/loyalty/add_tier.html -->
+
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Loyalty Tier{% endblock %}
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Create Loyalty Tier</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group mb-3">
+                            <label for="name">{{ form.name.label }}</label>
+                            {{ form.name(class="form-control") }}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="points_threshold">{{ form.points_threshold.label }}</label>
+                            {{ form.points_threshold(class="form-control") }}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="benefits">{{ form.benefits.label }}</label>
+                            {{ form.benefits(class="form-control") }}
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="program_id">{{ form.program_id.label }}</label>
+                            {{ form.program_id(class="form-control") }}
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

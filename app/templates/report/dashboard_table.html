@@ -1,0 +1,31 @@
+{% extends "report/basedetail.html" %}
+{% block title %}Laporan Penjualan{% endblock %}
+{% block content %}
+<div class="container">
+   
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Periode</th>
+                <th>Omset</th>
+                <th>Pembayaran</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in table_data %}
+            <tr>
+                <td>{{ row.time_period }}</td>
+                <td>{{ row.total_amount }}</td>
+                <td>{{ row.paid_amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+	<hr />
+	<h5>Omset = Jumlah tagihan invoice yang dibuat pada periode tersebut.</h2>
+	<h5>Pembayaran = Jumlah Pembayaran yang dilakukan pelanggan dalam periode tersebut.</h2>
+	<div class="mb-3 d-flex justify-content-end">
+		<button class="btn btn-warning w-30 no-print" onclick="printContent()"><i class="fa-solid fa-print"></i>&nbsp;Print&nbsp;</button>
+	</div>
+</div>
+{% endblock %}

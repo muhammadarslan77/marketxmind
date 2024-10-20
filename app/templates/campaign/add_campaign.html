@@ -1,0 +1,129 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Advertisements and Notifications{% endblock %}
+{% block content %}
+<div class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0 text-center">Create Advertisement and Notification</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Collapsible: General Info -->
+                        <div class="accordion mb-3" id="generalInfo">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingGeneral">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGeneral" aria-expanded="true" aria-controls="collapseGeneral">
+                                        General Information
+                                    </button>
+                                </h2>
+                                <div id="collapseGeneral" class="accordion-collapse collapse show" aria-labelledby="headingGeneral" data-bs-parent="#generalInfo">
+                                    <div class="accordion-body">
+                                        <div class="form-group mb-3">
+                                            <label for="name">{{ form.name.label }}</label>
+                                            {{ form.name(class="form-control") }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="description">{{ form.description.label }}</label>
+                                            {{ form.description(class="form-control") }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="start_date">{{ form.start_date.label }}</label>
+                                            {{ form.start_date(class="form-control") }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="end_date">{{ form.end_date.label }}</label>
+                                            {{ form.end_date(class="form-control") }}
+                                        </div>
+										<div class="form-group mb-3">
+											<label for="program_id">{{ form.program_id.label }}</label>
+											{{ form.program_id(class="form-control") }}
+										</div>
+										<div class="form-group mb-3">
+											<label for="transaction_number">{{ form.transaction_number.label }}</label>
+											{{ form.transaction_number(class="form-control") }}
+										</div>
+										
+										<!-- Scheduler and Interval Days -->
+										<div class="form-group mb-3">
+											<div class="form-check">
+												{{ form.is_scheduler(class="form-check-input") }}
+												<label for="is_scheduler" class="form-check-label">{{ form.is_scheduler.label }}</label>
+											</div>
+										</div>
+										<div class="form-group mb-3">
+											<label for="interval_days">{{ form.interval_days.label }}</label>
+											{{ form.interval_days(class="form-control") }}
+										</div>
+										<!-- Is Active -->
+										<div class="form-group mb-3">
+											<div class="form-check">
+												{{ form.is_active(class="form-check-input") }}
+												<label for="is_active" class="form-check-label">{{ form.is_active.label }}</label>
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Collapsible: Scheduler and Messaging -->
+                        <div class="accordion mb-3" id="scheduleMessaging">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingScheduler">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseScheduler" aria-expanded="false" aria-controls="collapseScheduler">
+                                        Messaging
+                                    </button>
+                                </h2>
+                                <div id="collapseScheduler" class="accordion-collapse collapse" aria-labelledby="headingScheduler" data-bs-parent="#scheduleMessaging">
+                                    <div class="accordion-body">
+                                       <!-- SMS -->
+                                        <div class="form-group mb-3">
+											<div class="form-check">
+												{{ form.sms(class="form-check-input") }}
+												<label for="sms" class="form-check-label">{{ form.sms.label }}</label>
+											</div>
+										</div>
+										<div class="form-group mb-3">
+											<label for="text_sms">{{ form.text_sms.label }}</label>
+											{{ form.text_sms(class="form-control") }}
+										</div>
+                                        
+                                        <!-- Messaging Channels -->
+										<div class="form-group mb-3">
+											<div class="form-check">
+												{{ form.whatsapp(class="form-check-input") }}
+												<label for="whatsapp" class="form-check-label">{{ form.whatsapp.label }}</label>
+											</div>
+										</div>
+										<div class="form-group mb-3">
+											<label for="text">{{ form.text.label }}</label>
+											{{ form.text(class="form-control", rows="5") }}
+										</div>
+
+                                        <!-- Email -->
+                                        <div class="form-group mb-3">
+                                            <div class="form-check mb-1">
+                                                {{ form.email(class="form-check-input") }}
+                                                <label for="email" class="form-check-label">{{ form.email.label }}</label>
+                                            </div>
+                                            <textarea id="text_email" class="form-control" name="text_email" placeholder="Enter Email message">{{ form.text_email.data }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sticky Submit Button -->
+                        <button type="submit" class="btn btn-success position-sticky bottom-0 w-100">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

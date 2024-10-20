@@ -1,0 +1,22 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block content %}
+<div class="product-catagories-wrapper py-3">
+	<div class="container">
+		{% if recommendation|length > 100 %}
+           
+			{{ recommendation | safe}}
+		{% else %}
+		
+			<div class="row g-2 rtl-flex-d-row-r">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header"><h5 class="mb-0">AI recommendations</h5></div>
+						<div class="card-body"><p>AI service is not yet active. Please upgrade the service..</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock %}

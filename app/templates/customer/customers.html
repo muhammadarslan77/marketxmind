@@ -1,0 +1,180 @@
+{% extends "basedetail.html" %}
+{% block title %}Customer{% endblock %}
+{% block content %}
+    <!-- Search Form-->
+    <div class="container">
+        <div class="search-form pt-3 rtl-flex-d-row-r">
+            <form id="searchForm" method="GET" action="{{ url_for('crm.members') }}">
+                <input id="searchInput" class="form-control" name="search_name" type="search" placeholder="Search by customer name, phone, email ...." value="{{ search_name }}">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+			<!-- Alternative Search Options -->
+			<div class="alternative-search-options">
+				<div class="dropdown"><a class="btn btn-danger dropdown-toggle" id="altSearchOption" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-sliders"></i></a>
+				  <!-- Dropdown Menu -->
+				  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="altSearchOption">
+					<li><a class="dropdown-item" href="{{ url_for('customer.add_customer') }}"><i class="fa-solid fa-plus"></i>Add Member</a></li>
+				  </ul>
+				</div>
+			</div>
+            
+        </div>
+        <!-- Message container -->
+        <div id="message" class="text-danger pt-2"></div>
+    </div>
+<div class="weekly-best-seller-area py-3">
+<div class="container">
+    <!-- Rest of the HTML structure here -->
+    <div class="row g-2">
+        {% for item in members %}
+            <div class="col-12">
+                <div class="horizontal-product-card">
+                    <div class="d-flex align-items-center">
+                        <div class="product-thumbnail-side">
+                            <a class="product-thumbnail shadow-sm d-block" href="{{ url_for('crm.view_member', member_id=item.member.id) }}">
+                                <img src="{{ url_for('static', filename='crm/qr_codes/' + item.member.qr_code) }}" alt="{{ item.member.name }}">
+                            </a>
+                        </div>
+                        <div class="product-description">
+                            <a class="wishlist-btn" href="{{ url_for('crm.view_member', member_id=item.member.id) }}"><i class="fa-solid fa-eye"></i></a>
+                            <a class="product-title d-block" href="{{ url_for('crm.view_member', member_id=item.member.id) }}">{{ item.member.name }}</a>
+                            <div class="sale-price"><i class="fa-solid fa-location-dot"></i> &nbsp;{{ item.member.address }}</div>
+                            <div class="product-rating">
+                                <a href="https://wa.me/{re.sub(r'[^0-9]', '', {{ item.member.phone_number }}.lstrip('0'))} " target="_blank" class="btn btn-success btn-sm">
+                                    <i class="fa-brands fa-whatsapp"></i> &nbsp;{{ item.member.phone_number }}
+                                </a>
+                            </div>
+                            <div class="order-summary">
+                                <a href="#" class="show-cart" data-item-id="{{ item.member.id }}" data-phone-number="{{ item.member.phone_number }}">
+                                    <i class="fa-solid fa-bag-shopping"> </i><span>&nbsp;Orders&nbsp;:&nbsp;{{ item.total_orders | default('-') }}&nbsp;</span>
+                                </a>&nbsp;&nbsp;
+                                <i class="fa-solid fa-gift"></i><span>&nbsp;Rewards&nbsp;:&nbsp;{{ item.total_rewards | default('-') }}&nbsp; </span>
+                            </div>
+							 <div id="customer_cart_{{ item.member.id }}" name="customer_cart" class="container" style="display:none;">
+								<form class="cart-form" id="customer_cart_form_{{ item.member.id }}" name="customer_cart_form" action="{{ url_for('crm.order') }}" method="POST">
+									{{ form.hidden_tag() }}  
+									<input class="form-control" type="hidden" id="customer_id_{{ item.member.id }}" name="customer_id" value="{{ item.member.id }}">
+									<input class="form-control" type="hidden" id="customer_phone_{{ item.member.id }}" name="customer_phone" value="{{ item.member.phone_number }}">
+									<div class="order-plus-minus d-flex align-items-center">
+										<div class="quantity-button-handler">-</div>
+										<input class="form-control cart-quantity-input" type="number" step="1" id="quantity_{{ item.member.id }}" name="quantity" value="1">
+										<div class="quantity-button-handler">+</div>
+									</div>
+									<button id="submit_cart_{{ item.member.id }}" class="btn btn-danger ms-3" type="submit">Buat Order</button>
+								</form>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+<<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center sticky-pagination">
+					{% if page > 1 %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=1, search_name=search_name) }}" aria-label="First">
+								<i class="fa-solid fa-backward-step"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=page-1, search_name=search_name) }}" aria-label="Previous">
+								<i class="fa-solid fa-chevron-left"></i>
+							</a>
+						</li>
+					{% endif %}
+
+					{% for p in range(1, total_pages + 1) %}
+						{% if p == 1 or p == 2 or p == total_pages or p == total_pages-1 or (p >= page - 1 and p <= page + 1) %}
+							<li class="page-item {% if p == page %}active{% endif %}">
+								<a class="page-link" href="{{ url_for('customer.dashboard', page=p, search_name=search_name) }}">{{ p }}</a>
+							</li>
+						{% elif p == 3 and page > 4 %}
+							<li class="page-item disabled">
+								<span class="page-link">...</span>
+							</li>
+						{% elif p == total_pages - 2 and page < total_pages - 3 %}
+							<li class="page-item disabled">
+								<span class="page-link">...</span>
+							</li>
+						{% endif %}
+					{% endfor %}
+
+					{% if page < total_pages %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=page+1, search_name=search_name) }}" aria-label="Next">
+								<i class="fa-solid fa-chevron-right"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=total_pages, search_name=search_name) }}" aria-label="Last">
+								<i class="fa-solid fa-forward-step"></i>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>   
+
+</div>
+
+</div>
+<script>
+	document.querySelectorAll(".show-cart").forEach(function(element) {
+			element.addEventListener("click", function(e) {
+				e.preventDefault();
+				var itemId = element.getAttribute("data-item-id");
+				var cartElement = document.getElementById("customer_cart_" + itemId);
+				
+				if (cartElement.style.display === "none" || cartElement.style.display === "") {
+                cartElement.style.display = "block";
+					} else {
+						cartElement.style.display = "none";
+					}
+					});
+		});
+		
+    document.querySelectorAll(".cart-form").forEach(function(form) {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", form.action, true);
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.message);  // Show success message
+                    location.reload();  // Refresh the page to update the member list
+                } else {
+                    const response = JSON.parse(xhr.responseText);
+                    alert(response.message);  // Show error message
+                }
+            };
+            xhr.send(formData);
+        });
+    });
+	document.addEventListener('DOMContentLoaded', (event) => {
+            const searchInput = document.getElementById('searchInput');
+            const searchForm = document.getElementById('searchForm');
+            const message = document.getElementById('message');
+
+            searchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    if (searchInput.value.length < 3) {
+                        event.preventDefault();
+                        message.textContent = 'Isikan pencarian dengan 3 karakter atau lebih';
+                    } else {
+                        message.textContent = '';
+                        searchForm.submit();
+                    }
+                }
+            });
+
+            searchForm.addEventListener('submit', (event) => {
+                if (searchInput.value.length < 3) {
+                    event.preventDefault();
+                    message.textContent = 'Isikan pencarian dengan 3 karakter atau lebih';
+                }
+            });
+        });
+</script>
+{% endblock %}

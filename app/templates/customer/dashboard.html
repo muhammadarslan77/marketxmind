@@ -1,0 +1,181 @@
+{% extends "basedetail.html" %}
+{% block title %}Customer{% endblock %}
+{% block content %}
+<!-- Search Form-->
+<div class="container">
+  <div class="search-form pt-3 rtl-flex-d-row-r">
+    <form id="searchForm" method="GET" action="{{ url_for('customer.dashboard') }}" role="search">
+      <input 
+        id="searchInput" 
+        class="form-control" 
+        name="search_name" 
+        type="search" 
+        placeholder="Search by customer name, phone, email ...." 
+        aria-label="Search by customer name, phone, or email" 
+        value=""
+      />
+      <button type="submit" aria-label="Submit search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+
+    <!-- Alternative Search Options -->
+    <div class="alternative-search-options">
+      <a 
+        class="btn btn-danger" 
+        id="altSearchOption" 
+        href="{{ url_for('customer.add_customer') }}" 
+        aria-label="Add a new customer"
+      >
+        <i class="fa-solid fa-plus"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Message container -->
+  <div id="message" class="text-danger pt-2" role="alert"></div>
+</div>
+
+<div class="weekly-best-seller-area py-3">
+		<div class="blog-wrapper py-3">
+	        <div class="container">
+				<div class="section-heading pt-3 rtl-text-right">
+					<h6>Summary</h6>
+				</div>
+				<div class="row g-2 rtl-flex-d-row-r">
+				<!-- Single Catagory-->
+				<div class="col-4">
+				  <div class="card blog-catagory-card">
+					<div class="card-body"><i class="fa-solid fa-file-invoice"></i><span class="d-block">{{ customer_orders }}<br />Invoice</span></div>
+				  </div>
+				</div>
+				<!-- Single Catagory-->
+				<div class="col-4">
+				  <div class="card blog-catagory-card">
+					<div class="card-body"><i class="fa-solid fa-coins"></i><span class="d-block">{{ customer_omset  }}<br />Omset</span></div>
+				  </div>
+				</div>
+				<!-- Single Catagory-->
+				<div class="col-4">
+				  <div class="card blog-catagory-card">
+					<div class="card-body"><i class="fa-solid fa-file-invoice-dollar"></i><span class="d-block">{{ customer_piutang }}<br />Receivables</span></div>
+				  </div>
+				</div>
+				
+				</div>
+			</div>
+		</div>
+		
+<div class="container">
+    <!-- Rest of the HTML structure here -->
+    <div class="row g-2">
+        {% for item in customers %}
+            <div class="col-12">
+                <div class="horizontal-product-card">
+                    <div class="d-flex align-items-center">
+                        <div class="product-thumbnail-side">
+                            <a class="product-thumbnail shadow-sm d-block" href="{{ url_for('customer.view_customer', customer_id=item.customer.id) }}">
+                                <img src="{{ url_for('static', filename='dashboard/img/bg-img/user.jpg') }}" alt="{{ item.customer.name }}">
+                            </a>
+                        </div>
+                        <div class="product-description">
+                            <a class="wishlist-btn" href="{{ url_for('customer.view_customer', customer_id=item.customer.id) }}"><i class="fa-solid fa-eye"></i></a>
+                            <a class="product-title d-block" href="{{ url_for('customer.view_customer', customer_id=item.customer.id) }}">{{ item.customer.name }}</a>
+                            <div class="sale-price"><i class="fa-solid fa-location-dot"></i> &nbsp;{{ item.customer.address_line1 }}</div>
+							<div class="sale-price">&nbsp;&nbsp;{{ item.customer.address_line2 }}</div>
+							<div class="sale-price">&nbsp;&nbsp;{{ item.customer.city }},{{ item.customer.zip }}</div>
+                            <div class="product-rating">
+                                <a href="https://wa.me/{re.sub(r'[^0-9]', '', {{ item.customer.phone_number }}.lstrip('0'))} " target="_blank" class="btn btn-success btn-sm">
+                                    <i class="fa-brands fa-whatsapp"></i> &nbsp;{{ item.customer.phone }}
+                                </a>
+                            </div>
+                            <div class="order-summary">
+                                <a href="#" class="show-cart" data-item-id="{{ item.customer.id }}" data-phone-number="{{ item.customer.phone_number }}">
+                                    <i class="fa-solid fa-coins"></i><span>&nbsp;Omset&nbsp;:&nbsp;{{ item.customer_omset | default('-') }}&nbsp;</span>
+                                </a>&nbsp;&nbsp;
+                                <i class="fa-solid fa-file-invoice-dollar"></i><span>&nbsp;Receivables&nbsp;:&nbsp;{{ item.customer_piutang | default('-') }}&nbsp; </span>
+                            </div>
+							 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+		<nav aria-label="Page navigation">
+				<ul class="pagination justify-content-center sticky-pagination">
+					{% if page > 1 %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=1, search_name=search_name) }}" aria-label="First">
+								<i class="fa-solid fa-backward-step"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=page-1, search_name=search_name) }}" aria-label="Previous">
+								<i class="fa-solid fa-chevron-left"></i>
+							</a>
+						</li>
+					{% endif %}
+
+					{% for p in range(1, total_pages + 1) %}
+						{% if p == 1 or p == 2 or p == total_pages or p == total_pages-1 or (p >= page - 1 and p <= page + 1) %}
+							<li class="page-item {% if p == page %}active{% endif %}">
+								<a class="page-link" href="{{ url_for('customer.dashboard', page=p, search_name=search_name) }}">{{ p }}</a>
+							</li>
+						{% elif p == 3 and page > 4 %}
+							<li class="page-item disabled">
+								<span class="page-link">...</span>
+							</li>
+						{% elif p == total_pages - 2 and page < total_pages - 3 %}
+							<li class="page-item disabled">
+								<span class="page-link">...</span>
+							</li>
+						{% endif %}
+					{% endfor %}
+
+					{% if page < total_pages %}
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=page+1, search_name=search_name) }}" aria-label="Next">
+								<i class="fa-solid fa-chevron-right"></i>
+							</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" href="{{ url_for('customer.dashboard', page=total_pages, search_name=search_name) }}" aria-label="Last">
+								<i class="fa-solid fa-forward-step"></i>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>   
+
+</div>
+
+</div>
+<script>
+	
+	document.addEventListener('DOMContentLoaded', (event) => {
+            const searchInput = document.getElementById('searchInput');
+            const searchForm = document.getElementById('searchForm');
+            const message = document.getElementById('message');
+
+            searchInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    if (searchInput.value.length < 3) {
+                        event.preventDefault();
+                        message.textContent = 'Isikan pencarian dengan 3 karakter atau lebih';
+                    } else {
+                        message.textContent = '';
+                        searchForm.submit();
+                    }
+                }
+            });
+
+            searchForm.addEventListener('submit', (event) => {
+                if (searchInput.value.length < 3) {
+                    event.preventDefault();
+                    message.textContent = 'Isikan pencarian dengan 3 karakter atau lebih';
+                }
+            });
+        });
+</script>
+{% endblock %}

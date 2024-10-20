@@ -1,0 +1,80 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="profile-wrapper-area py-3">
+        <div class="card user-info-card">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="user-info">
+                    <p class="mb-0 text-dark"></p>
+                    <h5 class="mb-0">Dashboard Laporan</h5>
+                </div>
+            </div>
+        </div>
+        <div class="card user-data-card">
+            <div class="card-body">
+                <form id="reportFilter" method="POST" action="{{ url_for('report.dashboard') }}">
+                    {{ form.hidden_tag() }}
+					<div class="form-group text-start mb-4">
+                        <label for="reportType">Jenis Laporan:</label>
+                        {{ form.reporttype(id="reportType",class="form-control") }}
+                    </div>
+                    <div class="form-group text-start mb-4">
+                        <label for="criteria">Periode:</label>
+                        {{ form.criteria(id="criteria",class="form-control") }}
+                    </div>
+                    <div class="form-group text-start mb-4">
+                        <label for="date_from">Dari Tanggal</label>
+                        <div class="d-flex">
+                            {{ form.date_from(id="date_from",class="form-control") }}
+                        </div>
+                    </div>
+
+                    <div class="form-group text-start mb-4">
+                        <label for="date_until">S.d Tanggal</label>
+                        <div class="d-flex">
+                            {{ form.date_until(id="date_until", class="form-control") }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        {{ form.submit(class="btn btn-success w-100") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportTypeSelect = document.getElementById('reportType');
+            const dateFromInput = document.getElementById('date_from');
+            const dateUntilInput = document.getElementById('date_until');
+			const criteriaInput = document.getElementById('criteria');
+			
+            function toggleDateFields() {
+                if (reportTypeSelect && dateFromInput && dateUntilInput && criteriaInput) {
+                    if (reportTypeSelect.value === 'omset' || reportTypeSelect.value === 'cash_flow') {
+                        dateFromInput.disabled = false;
+                        dateUntilInput.disabled = false;
+						criteriaInput.disabled = false
+						
+                    } else {
+                        dateFromInput.disabled = true;
+                        dateUntilInput.disabled = true;
+						criteriaInput.disabled = true
+                        const today = new Date().toISOString().split('T')[0];
+                        dateFromInput.value = today;
+                        dateUntilInput.value = today;
+                    }
+                }
+            }
+
+            if (reportTypeSelect) {
+                reportTypeSelect.addEventListener('change', toggleDateFields);
+            }
+            
+            toggleDateFields(); 
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="description" content="MarketX Mind - Community Consumption Insights and Engagement Platform">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#100DD1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+    <!-- The above tags *must* come first in the head, any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>MarketX Mind - Community Consumption Insights and Engagement Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-72x72.png') }}">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-96x96.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='dashboard/img/icons/icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='dashboard/img/icons/icon-167x167.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='dashboard/img/icons/icon-180x180.png') }}">
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/brands.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/solid.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/nice-select.css') }}">
+	<!-- Include Cropper.js CSS and JS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/style.css') }}">
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='dashboard/manifest.json') }}">
+    
+    <!-- Load critical CSS inline to avoid render-blocking -->
+    <style>
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .intro-wrapper {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #100DD1;
+        }
+        .big-logo {
+            max-width: 200px;
+            animation: fadeIn 1.5s;
+        }
+        /* Improved Button Styles */
+.get-started-btn .btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #FFB800, #FF9900); /* Gradient Background */
+    color: #fff; /* Text Color */
+    padding: 14px 28px; /* Increased Padding */
+    border: none; /* Remove Borders */
+    border-radius: 30px; /* Rounded Corners */
+    text-transform: uppercase; /* Uppercase for emphasis */
+    text-decoration: none; /* Remove underline */
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(255, 153, 0, 0.3); /* Subtle Shadow */
+    transition: all 0.3s ease; /* Smooth Transition */
+    margin: 20px auto; /* Center Alignment */
+    width: 80%; /* Responsive Width */
+    max-width: 300px; /* Max Width for Desktop */
+}
+
+/* Hover and Active Effects */
+.get-started-btn .btn:hover {
+    background: linear-gradient(135deg, #FF9900, #FFB800); /* Reverse Gradient */
+    box-shadow: 0 6px 12px rgba(255, 153, 0, 0.4); /* Enhanced Shadow on Hover */
+    transform: translateY(-2px); /* Slight Lift */
+}
+
+.get-started-btn .btn:active {
+    transform: scale(0.98); /* Slight Shrink on Tap */
+    box-shadow: 0 4px 8px rgba(255, 153, 0, 0.2); /* Subtle Shadow on Active */
+}
+
+/* Icon Inside Button (Optional) */
+.get-started-btn .btn::after {
+    content: ' \f061'; /* Font Awesome Icon for Arrow */
+    font-family: 'FontAwesome';
+    padding-left: 10px; /* Space between text and icon */
+}
+
+        .btn {
+            display: block;
+            width: 100%;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+
+    <!-- Optimized Favicon and Apple Touch Icons -->
+    <link rel="icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-72x72.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-96x96.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='dashboard/img/icons/icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='dashboard/img/icons/icon-167x167.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='dashboard/img/icons/icon-180x180.png') }}">
+
+    <!-- Non-critical CSS files (deferred) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/animate.css') }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/owl.carousel.min.css') }}" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/magnific-popup.css') }}" media="print" onload="this.media='all'">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='dashboard/manifest.json') }}">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only">/span>
+        </div>
+    </div>
+
+    <!-- Header and Logo Section -->
+    <div class="intro-wrapper d-flex align-items-center justify-content-center text-center">
+        <div class="container">
+            <img class="big-logo" src="{{ url_for('static', filename='dashboard/img/core-img/logo-white.png') }}" alt="MarketXmind Logo">
+       
+			<h3 class="text-white">AI-powered platform designed to enhance consumer behavior and consumption patterns within underserved communities to educate and encourage positive changes in consumption patterns.</h3>
+			<div class="get-started-btn">
+				 <a class="btn btn-warning btn-lg w-100"  href="{{ url_for('advancecrm.dashboard') }}">Get Started</a>
+				 
+			</div>
+			
+		</div>
+    </div>
+	<script>
+		var serviceWorkerUrl = "{{ url_for('static', filename='dashboard/service-worker.js') }}";
+	</script>
+    <!-- All JavaScript Files-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.passwordstrength.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/theme-switching.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/no-internet.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/active.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/pwa.js') }}"></script>
+    
+    <!-- Lazy loading images and other assets -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // Fallback for browsers without IntersectionObserver
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                });
+            }
+        });
+    </script>
+	
+  </body>
+</html>

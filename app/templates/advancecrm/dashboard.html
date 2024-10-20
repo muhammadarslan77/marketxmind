@@ -1,0 +1,59 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block content %}
+<div class="product-catagories-wrapper py-3">
+	<div class="container">
+	
+
+		<!-- Metrics Section -->
+		<div class="row g-2 rtl-flex-d-row-r">
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<a href="#" ><i class="fa-solid fa-users"></i>
+				<p>Customer&nbsp;:<span>{{ customer_total | currency }}</span></p></a>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<i class="fa-solid fa-file-invoice-dollar"></i>
+				<p>Monthly Turnover&nbsp;:<span>{{ monthly_omzet | currency }}</span></p>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<i class="fa-solid fa-file-invoice-dollar"></i>
+				<p>Monthly Income&nbsp;:<span> {{ monthly_revenue | currency }}</span></p>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<i class="fa-solid fa-chart-line"></i>
+				<p>Churn Risk&nbsp;:<span>{{ churn_risk | currency }}%</span></p>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<a href="{{ url_for('loyalty.list_programs') }}" ><i class="fa-solid fa-hand-holding-heart"></i>
+				<p>Loyalty Program&nbsp;:<span>{{ program_total }}</span></p></a>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<a href="{{ url_for('loyalty.list_tiers') }}" ><i class="fa-solid fa-layer-group"></i>
+				<p>Loyalty Level&nbsp;:<span>{{ tier_total   }}</span></p></a>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<a href="{{ url_for('campaign.list_campaigns') }}" ><i class="fa-solid fa-rectangle-ad"></i>
+				<p>Campaign&nbsp;:<span>{{ campaign_total  }}</span></p></a>
+			</div></div></div>
+			<div class="col-4"><div class="card catagory-card"><div class="card-body px-2">
+				<a href="{{ url_for('advancecrm.advisor') }}" ><i class="fa-solid fa-wand-sparkles"></i>
+				<p>Analysis &amp; Recommendation <span>AI</span></p></a>
+			</div></div></div>
+			
+			
+		</div>
+
+		
+		<br />
+		<!-- Charts Section -->
+		<div class="row g-2 rtl-flex-d-row-r"><div class="charts-section">
+			<h2>Performance Trends</h2>
+			<canvas id="salesTrendChart"></canvas>
+			<canvas id="churnRiskChart"></canvas>
+		</div></div>
+
+		
+		
+	</div>
+</div>
+
+{% endblock %}

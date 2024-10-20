@@ -1,0 +1,40 @@
+{% extends "report/basedetail.html" %}
+{% block title %}Sales Analytics{% endblock %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Sales Analytics</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Total Sales</h5>
+                    <p>${{ data.total_sales }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5>Total Invoices</h5>
+                    <p>{{ data.total_invoices }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>Top Products</h5>
+                    <ul>
+                        {% for product in data.top_products %}
+                            <li>{{ product[0] }} - {{ product[1] }} units</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

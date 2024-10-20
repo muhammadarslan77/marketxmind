@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f8fa;
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .container h1 {
+            font-size: 10rem;
+            margin-bottom: 10px;
+            color: #ff6b6b;
+        }
+
+        .container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .container p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .container a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .container a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .container h1 {
+                font-size: 7rem;
+            }
+
+            .container h2 {
+                font-size: 1.5rem;
+            }
+
+            .container p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="error-code"></h1>
+        <h2 id="error-title"></h2>
+        <p id="error-message"></p>
+        
+			<a href="{{ url_for('index') }}" class="link_404">Go to Home</a>
+		
+    </div>
+
+    <script>
+        // Detect the error type and display appropriate message
+        const errorCode = document.getElementById('error-code');
+        const errorTitle = document.getElementById('error-title');
+        const errorMessage = document.getElementById('error-message');
+
+        const errorType = window.location.pathname.split('/').pop(); // Assume error type is in URL
+
+        switch (errorType) {
+            case '404':
+                errorCode.textContent = '404';
+                errorTitle.textContent = 'Page Not Found';
+                errorMessage.textContent = 'Sorry, the page you are looking for does not exist.';
+                break;
+            case '400':
+                errorCode.textContent = '400';
+                errorTitle.textContent = 'Bad Request';
+                errorMessage.textContent = 'There was a problem with your request. Please try again.';
+                break;
+            case '500':
+                errorCode.textContent = '500';
+                errorTitle.textContent = 'Internal Server Error';
+                errorMessage.textContent = 'Oops! Something went wrong on our end. Please try again later.';
+                break;
+            default:
+                errorCode.textContent = 'Oops!';
+                errorTitle.textContent = 'Something went wrong';
+                errorMessage.textContent = 'An unknown error occurred. Please try again later.';
+                break;
+        }
+    </script>
+</body>
+</html>

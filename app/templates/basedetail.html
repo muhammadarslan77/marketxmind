@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no">
+    <meta name="description" content="marketXmind - Community Consumption Insights and Engagement Platform">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#100DD1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+    <!-- The above tags *must* come first in the head, any other head content must come *after* these tags -->
+    <!-- Title -->
+    <title>marketXmind - Community Consumption Insights and Engagement Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-72x72.png') }}">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='dashboard/img/icons/icon-96x96.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='dashboard/img/icons/icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{{ url_for('static', filename='dashboard/img/icons/icon-167x167.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='dashboard/img/icons/icon-180x180.png') }}">
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/brands.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/solid.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/css/nice-select.css') }}">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard/style.css') }}">
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ url_for('static', filename='dashboard/manifest.json') }}">
+	<style>
+	 .table-responsive {
+		overflow-x: auto;
+	  }
+
+	  /* Sticky Header and Pagination */
+	  .sticky-header {
+		position: sticky;
+		top: 0;
+		background-color: #fff;
+		z-index: 100;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	  }
+
+	  .sticky-pagination {
+		position: sticky;
+		bottom: 0;
+		background-color: #fff;
+		padding: 10px 0;
+		box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+	  }
+
+	  /* Mobile-friendly adjustments */
+	  @media (max-width: 768px) {
+		.table th:nth-child(2),
+		.table td:nth-child(2),  
+		.table th:nth-child(4),
+		.table td:nth-child(4), 
+		.table th:nth-child(5),
+		.table td:nth-child(5)
+		{
+		  display: none;
+		}
+
+		.table th,
+		.table td {
+		  padding: 12px 8px;
+		  font-size: 14px;
+		}
+
+		.alternative-command-options .dropdown-toggle {
+		  width: 100%;
+		  text-align: left;
+		}
+
+		.pagination .page-link {
+		  padding: 8px 12px;
+		  font-size: 14px;
+		}
+	  }
+
+	  @media (max-width: 576px) {
+		.table th,
+		.table td {
+		  padding: 10px 5px;
+		  font-size: 13px;
+		}
+	  }
+
+
+	.spinner-border {
+		display: none;
+		width: 1rem;
+		height: 1rem;
+		vertical-align: text-bottom;
+		border-width: 0.2em;
+	}
+
+	.alternative-command-options .dropdown-menu {
+		min-width: 200px; /* Ensures consistent width */
+		padding: 0; /* Removes default padding */
+		border-radius: 8px; /* Rounded corners */
+	  }
+
+	.alternative-command-options .dropdown-item {
+		display: flex; /* Flexbox for better alignment */
+		align-items: center; /* Vertically center content */
+		padding: 12px 16px; /* Add padding for a nicer look */
+		font-size: 16px; /* Font size for better readability */
+		color: #333; /* Darker text color */
+	  }
+
+	.alternative-command-options .dropdown-item i {
+		margin-right: 10px; /* Spacing between icon and text */
+		font-size: 18px; /* Slightly larger icons */
+	  }
+
+	.alternative-command-options .dropdown-item:hover {
+		background-color: #f8f9fa; /* Light hover effect */
+	  }
+
+	.alternative-command-options .dropdown-toggle {
+		padding: 10px; /* More padding for button */
+		border-radius: 8px; /* Rounded button */
+	  }
+
+	/* Mobile-specific styles */
+	@media (max-width: 576px) {
+    .alternative-command-options .dropdown-menu {
+      min-width: 100%; /* Full width on mobile */
+      padding: 0; /* Remove default padding */
+    }
+
+    .alternative-command-options .dropdown-item {
+      padding: 14px 20px; /* Larger padding for easier clicks */
+      font-size: 18px; /* Slightly larger text for readability */
+    }
+
+    .alternative-command-options .dropdown-item i {
+      font-size: 20px; /* Larger icons on mobile */
+      margin-right: 12px; /* More space between icon and text */
+    }
+
+    .alternative-command-options .dropdown-toggle {
+      width: 100%; /* Full-width button on mobile */
+      text-align: left; /* Align text/icon to the left */
+    }
+   </style>
+  </head>
+  <body>
+    <!-- Preloader-->
+    <div class="preloader" id="preloader">
+      <div class="spinner-grow text-secondary" role="status">
+        <div class="sr-only"></div>
+      </div>
+    </div>
+    <!-- Header Area -->
+    
+	<div class="header-area" id="headerArea">
+      <div class="container h-100 d-flex align-items-center justify-content-between rtl-flex-d-row-r">
+        <!-- Back Button-->
+        <div class="back-button me-2"><a href="#" onclick="navigateBack(event)"><i class="fa-solid fa-arrow-left-long"></i></a></div>
+        <!-- Page Title-->
+        <div class="page-heading">
+          <h6 class="mb-0">{% block title %}{% endblock %}</h6>
+        </div>
+        <!-- Navbar Toggler-->
+        <div class="suha-navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#suhaOffcanvas" aria-controls="suhaOffcanvas">
+          <div><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+	
+    <div class="page-content-wrapper">
+	   {% block content %}{% endblock %}
+    </div>
+	
+    <!-- Internet Connection Status-->
+    <div class="internet-connection-status" id="internetStatus"></div>
+    <!-- Footer Nav-->
+    <div class="footer-nav-area" id="footerNav">
+      <div class="suha-footer-nav">
+            <ul class="h-100 d-flex align-items-center justify-content-between ps-0 d-flex rtl-flex-d-row-r">
+				  <li><a href="{{ url_for('advancecrm.dashboard') }}"><i class="fa-solid fa-house"></i>Home</a></li>
+				  <li><a href="{{ url_for('customer.dashboard') }}"><i class="fa-solid fa-user"></i></i>Customer</a></li>
+				  <li><a href="#"><i class="fa-solid fa-store"></i>Store</a></li>
+				  <li><a href="{{ url_for('advancecrm.dashboard') }}"><i class="fa-solid fa-user-doctor"></i>CRM</a></li>
+				  <li><a href="#"><i class="fa-solid fa-right-to-bracket"></i>Login</a></li>		  
+			</ul>
+      </div>
+    </div>
+	<script>
+		var serviceWorkerUrl = "{{ url_for('static', filename='dashboard/service-worker.js') }}";
+	</script>
+	 
+    <script>
+	 function navigateBack(event) {
+  event.preventDefault(); // Prevent default link behavior
+
+  // Check if there's a previous page in the history
+  if (window.history.length > 1) {
+    window.history.back();
+    
+    // Refresh the page after navigating back
+    window.addEventListener('popstate', function() {
+      location.reload();
+    });
+  } else {
+    // If no history, optionally redirect to a default page or home
+    window.location.href = '/'; // Replace '/' with your default or home page
+  }
+}
+
+	</script>
+
+    <script src="{{ url_for('static', filename='dashboard/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.passwordstrength.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/theme-switching.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/no-internet.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/active.js') }}"></script>
+    <script src="{{ url_for('static', filename='dashboard/js/pwa.js') }}"></script>
+		
+	<!-- TinyMCE Initialization -->
+	<script src="https://cdn.tiny.cloud/1/pj9kth26oqk6jp34urc5miyvzkr25or7ehpdexc7vyljwxfw/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+	<script>
+    	
+	tinymce.init({
+    selector: 'textarea#text_email',  // Apply TinyMCE only to specific textareas
+    menubar: false,                       // Hide the menu bar to keep it simple for mobile
+    toolbar: 'bold italic underline | alignleft aligncenter alignright | bullist numlist | removeformat',  // Simplified toolbar
+    plugins: 'lists',                     // Only add necessary plugins
+    height: 200,                          // Adjust height for mobile usability
+    mobile: {
+        theme: 'mobile',                  // Use mobile-friendly theme
+        toolbar: ['bold italic underline | bullist numlist'],  // Simplified mobile toolbar
+        menubar: false                    // Hide menu bar on mobile too
+		}
+	});
+</script>
+
+  </body>
+</html>

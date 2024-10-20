@@ -1,0 +1,104 @@
+.table-responsive {
+	overflow-x: auto;
+  }
+.sticky-header {
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+	z-index: 100;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+.sticky-pagination {
+	position: sticky;
+	bottom: 0;
+	background-color: #fff;
+	padding: 10px 0;
+	box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+.spinner-border {
+	display: none;
+	width: 1rem;
+	height: 1rem;
+	vertical-align: text-bottom;
+	border-width: 0.2em;
+}
+
+.alternative-command-options .dropdown-menu {
+	min-width: 200px; 
+	padding: 0; 
+	border-radius: 8px; 
+  }
+
+.alternative-command-options .dropdown-item {
+	display: flex; 
+	align-items: center; 
+	padding: 12px 16px; 
+	font-size: 16px; 
+	color: #333; 
+  }
+.alternative-command-options .dropdown-item i {
+	margin-right: 10px;
+	font-size: 18px;
+  }
+
+.alternative-command-options .dropdown-item:hover {
+	background-color: #f8f9fa; 
+  }
+
+.alternative-command-options .dropdown-toggle {
+	padding: 10px; 
+	border-radius: 8px; 
+  }
+
+@media only screen and (max-width: 768px) {
+	.hide-on-mobile
+	{
+	  display: none;
+	}
+
+	.table th,
+	.table td {
+	  padding: 12px 8px;
+	  font-size: 14px;
+	}
+
+	.alternative-command-options .dropdown-toggle {
+	  width: 100%;
+	  text-align: left;
+	}
+
+	.pagination .page-link {
+	  padding: 8px 12px;
+	  font-size: 14px;
+	}
+}
+
+@media only screen and  (max-width: 576px) {
+
+	.table th,
+	.table td {
+	  padding: 10px 5px;
+	  font-size: 13px;
+	}
+
+	.alternative-command-options .dropdown-menu {
+	  min-width: 100%;
+	  padding: 0; 
+	}
+
+	.alternative-command-options .dropdown-item {
+	  padding: 14px 20px; 
+	  font-size: 18px;
+	}
+
+	.alternative-command-options .dropdown-item i {
+	  font-size: 20px; 
+	  margin-right: 12px;
+	}
+
+	.alternative-command-options .dropdown-toggle {
+	  width: 100%; 
+	  text-align: left; 
+	}
+}

@@ -1,0 +1,58 @@
+{% extends "advancecrm/basedetail.html" %}
+{% block title %}Analysis and AI recommendations{% endblock %}
+{% block content %}
+<div class="product-catagories-wrapper py-3">
+	<div class="container">
+		<div class="row g-2 rtl-flex-d-row-r">
+			<div class="col-12">
+				{{ recommendations | safe}}
+			</div>
+		</div>
+	
+	</div>
+	<!-- Modal for detailed recommendation -->
+    <div class="modal fade" id="detailedModal" tabindex="-1" role="dialog" aria-labelledby="detailedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailedModalLabel">Detail Recommendations</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailed-recommendation-content">
+                    <div class="post-content bg-white py-3 mb-3 dir-rtl">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+function getDetailedPoint(pointId) {
+    $('#detailedModal').modal('show');
+    document.getElementById('detailed-recommendation-content').innerHTML = `
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    `;
+    fetch(`/crm/advisor/detailed-point/${pointId}`, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('detailed-recommendation-content').innerHTML = data.detailed_response;
+    })
+    .catch(error => {
+        document.getElementById('detailed-recommendation-content').innerHTML = "<p>Error loading details. Please try again.</p>";
+        console.log('Error:', error);
+    });
+}
+</script>
+{% endblock %}

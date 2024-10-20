@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            width: 80mm; /* Set width suitable for POS receipt printers */
+            margin: 0 auto;
+            padding: 5px;
+        }
+        .header, .footer, .qr-code {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .header h3, .footer p {
+            margin: 5px 0;
+        }
+        .header p, .footer p {
+            font-size: 11px;
+        }
+        .details, .summary {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
+        }
+        .details th, .details td {
+            font-size: 12px;
+            padding: 2px 0;
+            text-align: left;
+        }
+        .details th {
+            border-bottom: 1px solid #000;
+        }
+        .price {
+            text-align: right;
+            width: 12ch; /* Width for price */
+        }
+        .total {
+            text-align: right;
+            width: 15ch; /* Width for total */
+        }
+        .summary td {
+            font-size: 12px;
+            padding: 2px 0;
+            font-weight: bold;
+            text-align: right;
+        }
+        .summary td:first-child {
+            text-align: left;
+        }
+        .qr-code img {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>{{ company.name }}</h3>
+        <p>{{ company.address }}, {{ company.city }}<br>
+        Phone: {{ company.phone_number }} | Email: {{ company.email }}</p>
+    </div>
+
+    <table class="details">
+        <tr>
+            <td>
+                <strong>Customer:</strong><br />{{ customer.name }}<br />
+                {{ customer.address }}<br />
+                <strong>Phone:</strong> {{ customer.phone }}<br />
+                <strong>Email:</strong> {{ customer.email }}
+            </td>
+            <td style="text-align: left;">
+                <strong>Receipt :</strong><br />{{ payment.payment_id }}<br>
+                <strong>Date :</strong> {{ payment.created_date.strftime('%d %b %Y') }}<br>
+                <strong>Invoice :</strong> {{ order.invoice_id }}<br>
+                <strong>Date :</strong> {{ order.created_date.strftime('%d %b %Y') }}
+            </td>
+        </tr>
+    </table>
+
+    <table class="details">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Qty</th>
+                <th class="price">Price</th>
+                <th class="total">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set ns = namespace(i=0) %}
+            {% for item in order_items %}
+                {% set ns.i = ns.i + 1 %}
+                <tr>
+                    <td>{{ ns.i }}.</td>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }} {{ item.unit_name }}</td>
+                    <td class="price">{{ '{:,.0f}'.format(item.unit_price).replace(',', '.') }}</td>
+                    <td class="total">{{ '{:,.0f}'.format(item.total_amount).replace(',', '.') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="summary">
+        <tr>
+            <td colspan="2"></td>
+            <td>Total</td>
+            <td>Rp. {{ '{:,.0f}'.format(order.net_amount).replace(',', '.') }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td>Paid</td>
+            <td>Rp. {{ '{:,.0f}'.format(payment.amount).replace(',', '.') }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td>Balance</td>
+            <td>Rp. {{ '{:,.0f}'.format(order.net_amount - order.paid_amount).replace(',', '.') }}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td>Payment Method</td>
+            <td>{{ payment.payment_method }}</td>
+        </tr>
+    </table>
+
+    <div class="qr-code">
+        <img src="{{ qr_code_data }}" alt="QR Code">
+    </div>
+
+    <div class="footer">
+        <p>Thankyou!</p>
+    </div>
+</body>
+</html>

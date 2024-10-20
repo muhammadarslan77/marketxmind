@@ -1,0 +1,188 @@
+{
+  "id": "/?source=pwa",
+  "name": "Market-X-Mind",
+  "short_name": "marketXmind",
+  "start_url": "/intro?source=pwa?standalone=true",
+  "display": "standalone",
+  "background_color": "#100DD1",
+  "theme_color": "#100DD1",
+  "categories": ["business", "ecommerce", "productivity", "finance", "shopping"],
+  "orientation": "portrait",
+  "description": "",
+  "lang": "id",
+  "prefer_related_applications": false,
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "focus-existing"]
+  },
+  "scope": "/",
+  "dir": "ltr",
+  "icons": [ {
+      "src": "img/icons/icon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-167x167.png",
+      "type": "image/png",
+      "sizes": "167x167",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+	{
+      "src": "img/icons/icon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-167x167.png",
+      "type": "image/png",
+      "sizes": "167x167",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "maskable"
+    },
+    {
+      "src": "img/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/static/screenshots/fitur.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	 {
+      "src": "/static/screenshots/sc_900x1600_1.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_900x1600_2.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_900x1600_3.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_900x1600_4.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_1600x900_1.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_1600x900_2.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	{
+      "src": "/static/screenshots/sc_1600x900_3.png",
+      "sizes": "640x480",
+      "type": "image/png"
+    },
+	
+    {
+      "src": "/static/screenshots/sc_1600x900_4.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

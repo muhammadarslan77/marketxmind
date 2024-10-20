@@ -1,0 +1,188 @@
+{% extends "basedetail.html" %}
+{% block title %}Customer Details{% endblock %}
+{% block content %}
+
+<div class="container">
+    <!-- Profile Wrapper -->
+    <div class="profile-wrapper-area py-3">
+        <!-- User Information -->
+        <div class="card user-info-card">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="user-info">
+                    <h5 class="mb-0">{{ customer_data.customer.name }}</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Meta Data -->
+        <div class="card user-data-card">
+            <div class="card-body">
+                <!-- Customer Information -->
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-user"></i><span>Full Name</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.name }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-phone"></i><span>Phone</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.phone }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-envelope"></i><span>Email</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.email }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-location-dot"></i><span>Address</span>
+                    </div>
+                    <div class="data-content">
+                        {{ customer_data.customer.address_line1 }}<br />
+                        {{ customer_data.customer.address_line2 }}<br />
+                        {{ customer_data.customer.city }}<br />
+                        {{ customer_data.customer.zip }}
+                    </div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-credit-card"></i><span>Credit Limit</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.credit_limit }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-file-invoice"></i><span>Order</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer_orders }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-coins"></i><span>Total Omset</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer_omset }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-file-invoice-dollar"></i><span>Total Paid</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer_bayar }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-money-bills"></i><span>Receivables Balance</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer_piutang }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-id-badge"></i><span>Customer Type</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.type }}</div>
+                </div>
+
+                <div class="single-profile-data d-flex align-items-center justify-content-between">
+                    <div class="title d-flex align-items-center">
+                        <i class="fa-solid fa-user-check"></i><span>Status</span>
+                    </div>
+                    <div class="data-content">{{ customer_data.customer.status }}</div>
+                </div>
+
+                <!-- Edit Profile Button -->
+                <div class="edit-profile-btn mt-3">
+                    <a class="btn btn-success w-100" href="{{ url_for('customer.edit_customer', customer_id=customer_data.customer.id) }}">
+                        <i class="fa-solid fa-pen me-2"></i>Edit Profile
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI-Powered Business Insights -->
+<div class="container">
+    <div class="profile-wrapper-area py-3">
+        <div class="card user-info-card">
+            <div class="card-body p-4 d-flex align-items-center">
+                <div class="user-info">
+                    <h5 class="mb-0">AI-Powered Business Insights</h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Section -->
+        <div class="card user-data-card">
+            <div class="card-body">
+                <button class="button btn btn-primary w-100 mb-2" onclick="fetchRecommendations()">
+                    Get Product Recommendations
+                </button>
+                <button class="button btn btn-primary w-100" onclick="fetchPricingStrategy()">
+                    Get Pricing Strategy
+                </button>
+            </div>
+            
+            <!-- Recommendation Results -->
+            <div class="card-body">
+                <div id="recommendation_result" class="result" style="display:none;">
+                    <h3>Product Recommendations</h3>
+                    <p id="recommendation_text"></p>
+                </div>
+
+                <!-- Pricing Strategy Results -->
+                <div id="pricing_result" class="result" style="display:none;">
+                    <h3>Pricing Strategy</h3>
+                    <p id="pricing_text"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fetch Recommendations with Error Handling
+    function fetchRecommendations() {
+        const customerId = "{{ customer_data.customer.id }}";  // Using customer's ID from backend
+        fetch(`/customer/recommendations/${customerId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('recommendation_text').innerText = data.recommendations;
+                document.getElementById('recommendation_result').style.display = 'block';
+            })
+            .catch(error => {
+                // Show default recommendation in case of error
+                document.getElementById('recommendation_text').innerText = "We couldn't fetch the recommendations at the moment. Here are some default suggestions: Urban Outfitters, Electronic, Home Shoping";
+                document.getElementById('recommendation_result').style.display = 'block';
+            });
+    }
+
+    // Fetch Pricing Strategy with Error Handling
+    function fetchPricingStrategy() {
+        const customerId = "{{ customer_data.customer.id }}";  // Using customer's ID from backend
+        fetch(`/customer/pricing-strategy/${customerId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('pricing_text').innerText = data.pricing_strategy;
+                document.getElementById('pricing_result').style.display = 'block';
+            })
+            .catch(error => {
+                // Show default pricing strategy in case of error
+                document.getElementById('pricing_text').innerText = "We couldn't fetch the pricing strategy at the moment. Please try again later.";
+                document.getElementById('pricing_result').style.display = 'block';
+            });
+    }
+</script>
+
+
+{% endblock %}
